@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>NSBluetoothAlwaysUsageDescription</key>
+  <string>Your explanation why the app needs Bluetooth access.</string>
+  <key>NSBluetoothPeripheralUsageDescription</key>
+  <string>Your explanation why the app needs to communicate with Bluetooth peripherals.</string>
+
+  <!-- If your app needs location access for Bluetooth scanning -->
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Your explanation for location access while the app is in use.</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Your explanation for location access at all times.</string>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>en</string>
+  <key>CFBundleExecutable</key>
+  <string>App</string>
+  <key>CFBundleIdentifier</key>
+  <string>io.flutter.flutter.app</string>
+  <key>CFBundleInfoDictionaryVersion</key>
+  <string>6.0</string>
+  <key>CFBundleName</key>
+  <string>App</string>
+  <key>CFBundlePackageType</key>
+  <string>FMWK</string>
+  <key>CFBundleShortVersionString</key>
+  <string>1.0</string>
+  <key>CFBundleSignature</key>
+  <string>????</string>
+  <key>CFBundleVersion</key>
+  <string>1.0</string>
+  <key>MinimumOSVersion</key>
+  <string>12.0</string>
+</dict>
+</plist>

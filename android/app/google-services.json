@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "416063473702",
+    "project_id": "life-sync-81944",
+    "storage_bucket": "life-sync-81944.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416063473702:android:e5406a92114f98d7613ee7",
+        "android_client_info": {
+          "package_name": "com.example.life_sync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3tHSxRLQ139pOfeAZzNJ3HJXpGF7dh14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
