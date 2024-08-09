@@ -2,6 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Utils {
+  static void fieldfocuschange(
+      BuildContext context, FocusNode current, FocusNode nextfocus) {
+    current.unfocus();
+    FocusScope.of(context).requestFocus(nextfocus);
+  }
+
   static go(
       {required BuildContext context,
       required dynamic screen,
@@ -20,7 +26,7 @@ class Utils {
   }
 
   static Future<bool> requestPermission() async {
-    var status1 = await Permission.audio.status;
+    var status1 = await Permission.bluetooth.status;
     if (status1.isGranted) {
       return true;
     } else {

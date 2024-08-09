@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:life_sync/firebase_options.dart';
 import 'package:life_sync/screens/splash/splash_screen.dart';
 
-void main() async{
+import 'common/appcolor.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -16,27 +18,29 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(430, 932),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context,child){
+      builder: (context, child) {
         return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(elevation: 0, scrolledUnderElevation: 0),
-        scaffoldBackgroundColor: Colors.white,
-        
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const SplashScreen()
-    );
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            appBarTheme:
+                const AppBarTheme(elevation: 0, scrolledUnderElevation: 0),
+            scaffoldBackgroundColor: Colors.white,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.indigoAccent,
+              surface: AppColors.whiteColor,
+            ),
+            useMaterial3: true,
+          ),
+          home: const SplashScreen(),
+          debugShowCheckedModeBanner: false,
+        );
       },
     );
   }
 }
-
