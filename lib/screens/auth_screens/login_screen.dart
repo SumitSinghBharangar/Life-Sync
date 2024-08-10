@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:life_sync/common/appcolor.dart';
-import 'package:iconly/iconly.dart';
+
 import 'package:life_sync/utils/utils.dart';
-import 'package:neopop/neopop.dart';
+
 
 import '../../common/buttons/bold_button.dart';
 
@@ -59,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Enter you mail address";
+                  return "Enter your mail address";
                 }
                 final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
                 if (!emailRegex.hasMatch(value)) {
@@ -93,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 40.h,
             ),
             TextFormField(
+              obscureText: true,
               style: TextStyle(
                 fontSize: 20.sp,
               ),
@@ -135,24 +135,40 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 40.h,
             ),
-            Text(
-              "Create An Account",
-              style: TextStyle(
-                fontSize: 21.sp,
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.w900,
+            GestureDetector(
+              child: Text(
+                "Create An Account",
+                style: TextStyle(
+                  fontSize: 21.sp,
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
+              onTap: () {
+                widget.pageController.previousPage(
+                  duration: const Duration(milliseconds: 800),
+                  curve: Curves.fastEaseInToSlowEaseOut,
+                );
+              },
             ),
             SizedBox(
               height: 40.h,
             ),
-            Text(
-              "Forgot Password",
-              style: TextStyle(
-                fontSize: 21.sp,
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.w900,
+            GestureDetector(
+              child: Text(
+                "Forgot Password",
+                style: TextStyle(
+                  fontSize: 21.sp,
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
+              onTap: () {
+                widget.pageController.nextPage(
+                  duration: const Duration(milliseconds: 800),
+                  curve: Curves.fastEaseInToSlowEaseOut,
+                );
+              },
             )
           ],
         ),

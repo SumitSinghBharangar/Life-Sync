@@ -80,7 +80,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             _circle(Colors.indigoAccent.shade400, 300.w, true),
                       ),
                       AnimatedPositioned(
-                        bottom: -MediaQuery.viewInsetsOf(context).bottom * 1.3,
+                        bottom: -MediaQuery.viewInsetsOf(context).bottom * 1.5,
                         left: 0,
                         right: 0,
                         top: 0,
@@ -88,21 +88,21 @@ class _AuthScreenState extends State<AuthScreen> {
                         child: Stack(
                           children: [
                             Positioned(
-                              right: (size.width / 2) + 100.w,
-                              bottom: -50.w,
+                              left: (size.width - 100.w),
+                              bottom: -70.w,
                               child: _circle(
                                   Colors.indigoAccent.withOpacity(.8),
                                   220.w,
                                   false),
                             ),
                             Positioned(
-                              right: (size.width / 2) + 100.w,
+                              left: (size.width - 160.w),
                               bottom: -200.w,
                               child: _circle(
                                   Colors.indigoAccent.shade400, 300.w, false),
                             ),
                             Positioned(
-                              right: (size.width / 2) + 75 / 2.w,
+                              right: (size.width + 250.w),
                               bottom: -200.w,
                               child: _circle(
                                   Colors.indigoAccent.shade400, 300.w, false),
@@ -120,13 +120,15 @@ class _AuthScreenState extends State<AuthScreen> {
                 controller: _pageController,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  LoginScreen(
-                    pageController: _pageController,
-                  ),
                   RegisterScreen(
                     pageController: _pageController,
                   ),
-                  ForgotPasswordScreen(pageController: _pageController)
+                  LoginScreen(
+                    pageController: _pageController,
+                  ),
+                  ForgotPasswordScreen(
+                    pageController: _pageController,
+                  )
                 ],
               ),
             ),
