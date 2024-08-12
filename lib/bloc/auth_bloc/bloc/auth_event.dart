@@ -26,3 +26,10 @@ class SignUpButtonEvent extends AuthEvent {
   @override
   List<Object> get props => [password, email];
 }
+
+class PasswordResetEvent extends AuthEvent {
+  final String email;
+
+  const PasswordResetEvent({required this.email});
+
+}

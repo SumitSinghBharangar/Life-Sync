@@ -27,4 +27,14 @@ class AuthRepo {
     }
     return null;
   }
+
+  Future<User?> passwordResetMethod(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      print("password reset mail sended to to gmail account");
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+    }
+    return null;
+  }
 }
