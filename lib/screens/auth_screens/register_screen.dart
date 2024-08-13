@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:life_sync/bloc/auth_bloc/bloc/auth_bloc.dart';
 import 'package:life_sync/common/buttons/bold_button.dart';
+import 'package:life_sync/enum/enum.dart';
+import 'package:life_sync/screens/home/home_screen.dart';
 
 import '../../utils/utils.dart';
 
@@ -251,7 +256,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               FractionallySizedBox(
                 widthFactor: 1,
-                child: BoldButton(onPressed: () {}, text: "Create An Account"),
+                child: BlocListener<AuthBloc, AuthState>(
+                  listenWhen: (previous, current) =>
+                      current.registerStatus != previous.registerStatus,
+                  listener: (context, state) async {
+                    if (state.registerStatus == RegisterStatus.error) {
+                      await showAppDailog(
+                        context,
+                        iconData: Iconsax.info_circle5,
+                        title: "Unable to Login",
+                        subTitle:
+                            "You are not able to create account at that time",
+                      );
+                    }
+                    if (state.registerStatus == RegisterStatus.success) {
+                      Utils.go(
+                          context: context,
+                          screen: const HomeScreen(),
+                          replace: true);
+                    }
+                  },
+                  child: BoldButton(
+                      onPressed: () async {
+                        if (_fKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(
+                                SignUpButtonEvent(
+                                  email: _mail.text.trim(),
+                                  password: _pass.text.trim(),
+                                ),
+                              );
+                        }
+                      },
+                      text: "Create An Account"),
+                ),
               ),
               SizedBox(
                 height: 40.h,

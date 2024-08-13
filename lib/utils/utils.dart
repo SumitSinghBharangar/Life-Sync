@@ -1,4 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Utils {
@@ -47,5 +52,109 @@ class Utils {
         return false;
       }
     }
+  }
+}
+
+Future<bool> showAppDailog(
+  BuildContext context, {
+  required IconData iconData,
+  Color color = Colors.red,
+  required String title,
+  required String subTitle,
+}) async {
+  bool res = false;
+  showCupertinoDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) => _InfoDailogContent(
+      onAction: (res) {
+        res = res;
+      },
+      iconData: iconData,
+      color: color,
+      subTitle: subTitle,
+      title: title,
+    ),
+  );
+
+  return res;
+}
+
+class _InfoDailogContent extends StatelessWidget {
+  const _InfoDailogContent(
+      {required this.onAction,
+      required this.iconData,
+      required this.color,
+      required this.title,
+      required this.subTitle});
+
+  final Function(bool res) onAction;
+  final IconData iconData;
+  final Color color;
+  final String title;
+  final String subTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: CupertinoAlertDialog(
+          content: Center(
+            child: Material(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.transparent,
+              child: Container(
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  // color: Colors.white,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Iconsax.close_circle5,
+                      color: Colors.red,
+                      size: 50.sp,
+                    ),
+                    SizedBox(height: 30.h),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                     Text(
+                      subTitle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                onAction(true);
+                Navigator.pop(context);
+              },
+              child: const Text("Ok"),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                onAction(false);
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

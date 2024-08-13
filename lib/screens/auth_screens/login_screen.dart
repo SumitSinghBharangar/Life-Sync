@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:life_sync/bloc/auth_bloc/bloc/auth_bloc.dart';
+import 'package:life_sync/enum/enum.dart';
+import 'package:life_sync/screens/home/home_screen.dart';
 
 import 'package:life_sync/utils/utils.dart';
-
 
 import '../../common/buttons/bold_button.dart';
 
@@ -67,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 return null;
               },
               controller: _mail,
+              focusNode: _emailFocusNode,
               onTapOutside: (event) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
               decoration: InputDecoration(
@@ -92,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 40.h,
             ),
             TextFormField(
+              focusNode: _passwordFocusNode,
               obscureText: true,
               style: TextStyle(
                 fontSize: 20.sp,
@@ -130,7 +136,45 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             FractionallySizedBox(
               widthFactor: 1,
-              child: BoldButton(text: "Log In", onPressed: () async {}),
+              child: BlocListener<AuthBloc, AuthState>(
+                listenWhen: (previous, current) =>
+                    current.loginStatus != previous.loginStatus,
+                listener: (context, state) async {
+                  if (state.loginStatus == LoginStatus.error) {
+                    await showAppDailog(
+                      context,
+                      iconData: Iconsax.info_circle5,
+                      title: "Unabel to Login",
+                      subTitle: "You are not able to login at that time",
+                    );
+                  }
+                  if (state.loginStatus == LoginStatus.success) {
+                    Utils.go(
+                        context: context,
+                        screen: const HomeScreen(),
+                        replace: true);
+                  }
+                },
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  buildWhen: (previous, current) =>
+                      current.loginStatus != previous.loginStatus,
+                  builder: (context, state) {
+                    return BoldButton(
+                      text: "Log In",
+                      onPressed: () async {
+                        if (_fKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(
+                                LoginButtonEvent(
+                                  mail: _mail.text.trim(),
+                                  pass: _password.text.trim(),
+                                ),
+                              );
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
             ),
             SizedBox(
               height: 40.h,

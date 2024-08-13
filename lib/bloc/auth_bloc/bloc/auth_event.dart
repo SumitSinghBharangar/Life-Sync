@@ -28,8 +28,10 @@ class SignUpButtonEvent extends AuthEvent {
 }
 
 class PasswordResetEvent extends AuthEvent {
-  final String email;
+  final String fmail;
 
-  const PasswordResetEvent({required this.email});
+  const PasswordResetEvent({required this.fmail});
+  @override
+  List<Object> get props => [fmail];
 
 }

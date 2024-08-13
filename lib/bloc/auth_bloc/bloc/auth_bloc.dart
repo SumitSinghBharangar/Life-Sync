@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:life_sync/enum/enum.dart';
 import 'package:life_sync/repositories/auth_repo.dart';
 
@@ -15,6 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.authRepo}) : super(const AuthState()) {
     on<LoginButtonEvent>(_loginButtonEvent);
     on<SignUpButtonEvent>(_signUpButtonEvent);
+    on<PasswordResetEvent>(_passwordResetEvent);
   }
 
   FutureOr<void> _loginButtonEvent(
@@ -37,5 +38,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       emit(state.copyWith(registerStatus: RegisterStatus.error));
     }
+  }
+
+  
+
+  FutureOr<void> _passwordResetEvent(PasswordResetEvent event, Emitter<AuthState> emit) async{
+    await authRepo.passwordResetMethod(event.fmail);
   }
 }
