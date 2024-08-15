@@ -1,12 +1,9 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:life_sync/enum/enum.dart';
 import 'package:life_sync/repositories/auth_repo.dart';
-
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -32,8 +29,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _signUpButtonEvent(
       SignUpButtonEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(registerStatus: RegisterStatus.loading));
-    User? user = await authRepo.signUpMethod(event.email, event.password);
-    if (user != null) {
+    bool user = await authRepo.signUpMethod(event.email, event.password,event.fullname);
+    if (user == true) {
       emit(state.copyWith(registerStatus: RegisterStatus.success));
     } else {
       emit(state.copyWith(registerStatus: RegisterStatus.error));

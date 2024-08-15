@@ -283,6 +283,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 SignUpButtonEvent(
                                   email: _mail.text.trim(),
                                   password: _pass.text.trim(),
+                                  fullname: _name.text.trim(),
                                 ),
                               );
                         }

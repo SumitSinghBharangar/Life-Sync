@@ -2,6 +2,7 @@ part of 'auth_bloc.dart';
 
 class AuthState extends Equatable {
   final String email;
+  final String fullname;
   final RegisterStatus registerStatus;
   final LoginStatus loginStatus;
   final String mail;
@@ -12,6 +13,7 @@ class AuthState extends Equatable {
   final String signupmsg;
   const AuthState({
     this.pass = '',
+    this.fullname = '',
     this.password = '',
     this.email = '',
     this.mail = '',
@@ -28,12 +30,15 @@ class AuthState extends Equatable {
     String? email,
     String? pass,
     String? password,
+    String? fullname,
     String? loginmsg,
     String? signupmsg,
     LoginStatus? loginStatus,
     RegisterStatus? registerStatus,
+
   }) {
     return AuthState(
+      fullname: fullname ?? this.fullname,
       email: email ?? this.email,
       pass: pass ?? this.pass,
       mail: mail ?? this.mail,
@@ -57,5 +62,6 @@ class AuthState extends Equatable {
         fmail,
         loginmsg,
         signupmsg,
+        fullname,
       ];
 }
