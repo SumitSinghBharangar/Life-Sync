@@ -225,14 +225,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           tokens: [token!],
                           uid: user.uid,
                         );
-                        if(context.mounted){
+                        if (context.mounted) {
                           // here we made the bloc for uploading the profile information by made the function of updating the profile
                           // then make the navigation to the main screen by binding it in the bloc listner
                         }
                       }
                     },
                     text: "Continue"),
-              )
+              ),
+
+              // more content added to complete the profile page
             ],
           ),
         ),
