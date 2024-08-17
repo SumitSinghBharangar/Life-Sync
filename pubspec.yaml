@@ -48,6 +48,9 @@ dependencies:
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
   fluttertoast: ^8.2.6
+  image_picker: ^1.1.2
+  image_cropper: ^8.0.2
+  firebase_messaging: ^15.0.4
 
 dev_dependencies:
   flutter_test:

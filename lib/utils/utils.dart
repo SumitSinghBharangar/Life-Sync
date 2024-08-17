@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:ui';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -126,7 +128,7 @@ class _InfoDailogContent extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                     Text(
+                    Text(
                       subTitle,
                       textAlign: TextAlign.center,
                     ),
@@ -157,4 +159,28 @@ class _InfoDailogContent extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<String> fileToFirebase({
+  required List<String> path,
+  required String name,
+  required File file,
+}) async {
+  String url;
+  var ref = FirebaseStorage.instance.ref(path.first);
+  for (var p in (path.length > 1 ? path.sublist(1) : [])) {
+    ref = ref.child(p);
+  }
+
+  ref = ref.child('$name.${file.path.split('.').last}');
+
+  await ref.putData(await file.readAsBytes()).whenComplete(
+    () async {
+      url = await ref.getDownloadURL();
+    },
+  );
+
+  url = await ref.getDownloadURL();
+
+  return url;
 }

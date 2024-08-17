@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:life_sync/screens/home/home_screen.dart';
 import 'package:life_sync/screens/onboarding/onbording_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -19,9 +20,9 @@ class SplashServices {
                 replace: true)
             : Utils.go(
                 context: context,
-                screen: const OnbordingScreen(),  // change screen onboarding to HomeScreen home page designed
-                replace:
-                    true); 
+                screen:
+                    const HomeScreen(), // change screen onboarding to HomeScreen home page designed
+                replace: true);
       } else {
         await openAppSettings();
       }
