@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:life_sync/common/constants/app_collection.dart';
+import 'package:life_sync/common/models/master_model.dart';
+import 'package:life_sync/common/models/user_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Utils {
@@ -183,4 +187,10 @@ Future<String> fileToFirebase({
   url = await ref.getDownloadURL();
 
   return url;
+}
+Future<void> updateProfile(MasterPerson model)async{
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  await usersCollection.doc(uid).set((model as UserModel).toMap());
+  
+
 }

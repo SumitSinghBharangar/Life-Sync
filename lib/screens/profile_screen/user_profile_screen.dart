@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:life_sync/common/buttons/round_bold_button.dart';
 import 'package:life_sync/common/buttons/scale_button.dart';
 import 'package:life_sync/common/models/user_model.dart';
+import 'package:life_sync/screens/home/home_screen.dart';
 import 'package:life_sync/screens/onboarding/onbording_screen.dart';
 import 'package:life_sync/utils/utils.dart';
 
@@ -226,15 +227,49 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           uid: user.uid,
                         );
                         if (context.mounted) {
+                          await updateProfile(model);
                           // here we made the bloc for uploading the profile information by made the function of updating the profile
                           // then make the navigation to the main screen by binding it in the bloc listner
+                        }
+                        if (context.mounted) {
+                          Utils.go(
+                              context: context,
+                              screen: const HomeScreen(),
+                              replace: true);
                         }
                       }
                     },
                     text: "Continue"),
               ),
-
-              // more content added to complete the profile page
+              const SizedBox(height: 24),
+              Wrap(
+                children: [
+                  const FittedBox(
+                    child: Text(
+                        "By proceeding you consent to get calls, WhatsApp or\nSMS, including by automated dialer and you accept the "),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: const Text(
+                      "terms of service",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const Text(" and "),
+                  InkWell(
+                    onTap: () {},
+                    child: const Text(
+                      "privacy policy.",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 50),
             ],
           ),
         ),

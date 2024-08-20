@@ -278,7 +278,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                   child: BoldButton(
                       onPressed: () async {
-                        if (_fKey.currentState!.validate()) {
+                        if (_fKey.currentState?.validate() ?? false) {
                           context.read<AuthBloc>().add(
                                 SignUpButtonEvent(
                                   email: _mail.text.trim(),

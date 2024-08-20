@@ -162,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return BoldButton(
                       text: "Log In",
                       onPressed: () async {
-                        if (_fKey.currentState!.validate()) {
+                        if (_fKey.currentState?.validate() ?? false) {
                           context.read<AuthBloc>().add(
                                 LoginButtonEvent(
                                   mail: _mail.text.trim(),
