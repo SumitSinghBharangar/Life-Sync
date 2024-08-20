@@ -83,33 +83,7 @@ class _BoldButtonState extends State<BoldButton> {
                 ),
               ),
             ),
-            // AnimatedCrossFade(
-            //   firstChild: SizedBox(width: 0, height: 25.w),
-            //   secondChild: SizedBox(
-            //     width: 30.w,
-            //     height: 25.w,
-            //     child: Align(
-            //       alignment: Alignment.centerRight,
-            //       child: SizedBox(
-            //         width: 20.w,
-            //         height: 20.w,
-            //         child: AnimatedOpacity(
-            //           duration: const Duration(milliseconds: 300),
-            //           opacity: _isLoadig ? 1 : 0,
-            //           child: const CircularProgressIndicator(
-            //             color: Colors.white,
-            //             strokeAlign: BorderSide.strokeAlignInside,
-            //             strokeWidth: 2,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            //   crossFadeState: _isLoadig
-            //       ? CrossFadeState.showSecond
-            //       : CrossFadeState.showFirst,
-            //   duration: const Duration(milliseconds: 300),
-            // ),
+           
           ],
         ),
       ),

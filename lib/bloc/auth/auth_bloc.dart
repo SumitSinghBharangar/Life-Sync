@@ -19,11 +19,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       LoginButtonEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(loginStatus: LoginStatus.loading));
     User? user = await authRepo.signInMethod(event.mail, event.pass);
+    
     if (user != null) {
       emit(state.copyWith(loginStatus: LoginStatus.success));
+      
     } else {
       emit(state.copyWith(loginStatus: LoginStatus.error));
     }
+    
+  
   }
 
   FutureOr<void> _signUpButtonEvent(

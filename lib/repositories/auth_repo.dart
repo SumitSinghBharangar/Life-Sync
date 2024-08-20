@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:life_sync/common/constants/app_collection.dart';
 
+import '../common/models/user_model.dart';
+
 class AuthRepo {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Future<User?> signInMethod(String mail, String pass) async {
@@ -47,4 +49,39 @@ class AuthRepo {
     }
     return;
   }
+
+  Future<UserModel> userLogin(String mail, String password) async {
+    try {
+      var u = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: mail, password: password);
+
+      if (u.user == null) throw IncorrectCredentailsAuthServicesException();
+
+      var d = await usersCollection.doc(u.user!.uid).get();
+
+      if (d.data()?['imageUrl'] == null) {
+        throw UserIncompleteProfileAuthServicesException();
+      }
+      return UserModel.fromMap(d.data()!);
+    } catch (e) {
+      if (e is AuthServicesException) {
+        rethrow;
+      }
+      throw IncorrectCredentailsAuthServicesException();
+    }
+  }
 }
+
+abstract class AuthServicesException implements Exception {}
+
+abstract class IncompleteProfileAuthServicesException
+    extends AuthServicesException {}
+
+class UserIncompleteProfileAuthServicesException
+    extends IncompleteProfileAuthServicesException {}
+
+class DriverIncompleteProfileAuthServicesException
+    extends IncompleteProfileAuthServicesException {}
+
+class IncorrectCredentailsAuthServicesException extends AuthServicesException {}
+

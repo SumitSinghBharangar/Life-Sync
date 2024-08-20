@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
+
 import 'package:life_sync/bloc/auth/auth_bloc.dart';
-import 'package:life_sync/enum/enum.dart';
 import 'package:life_sync/screens/home/home_screen.dart';
+
 
 import 'package:life_sync/utils/utils.dart';
 
@@ -136,44 +136,25 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             FractionallySizedBox(
               widthFactor: 1,
-              child: BlocListener<AuthBloc, AuthState>(
-                listenWhen: (previous, current) =>
-                    current.loginStatus != previous.loginStatus,
-                listener: (context, state) async {
-                  if (state.loginStatus == LoginStatus.error) {
-                    await showAppDailog(
-                      context,
-                      iconData: Iconsax.info_circle5,
-                      title: "Unabel to Login",
-                      subTitle: "You are not able to login at that time",
-                    );
-                  }
-                  if (state.loginStatus == LoginStatus.success) {
-                    Utils.go(
-                        context: context,
-                        screen: const HomeScreen(),
-                        replace: true);
+              child: 
+              BoldButton(
+                text: "Log In",
+                onPressed: () async {
+                  if (_fKey.currentState?.validate() ?? false) {
+                    var r = context.read<AuthBloc>().add(
+                          LoginButtonEvent(
+                            mail: _mail.text.trim(),
+                            pass: _password.text.trim(),
+                          ),
+                        );
+                    if (context.mounted) {
+                      Utils.go(
+                          context: context,
+                          screen: const HomeScreen(),
+                          replace: true);
+                    }
                   }
                 },
-                child: BlocBuilder<AuthBloc, AuthState>(
-                  buildWhen: (previous, current) =>
-                      current.loginStatus != previous.loginStatus,
-                  builder: (context, state) {
-                    return BoldButton(
-                      text: "Log In",
-                      onPressed: () async {
-                        if (_fKey.currentState?.validate() ?? false) {
-                          context.read<AuthBloc>().add(
-                                LoginButtonEvent(
-                                  mail: _mail.text.trim(),
-                                  pass: _password.text.trim(),
-                                ),
-                              );
-                        }
-                      },
-                    );
-                  },
-                ),
               ),
             ),
             SizedBox(

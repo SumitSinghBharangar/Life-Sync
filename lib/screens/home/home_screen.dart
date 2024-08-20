@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:life_sync/screens/auth_screens/auth_screen.dart';
 import 'package:life_sync/screens/auth_screens/register_screen.dart';
 import 'package:life_sync/utils/utils.dart';
 
@@ -25,7 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Utils.go(
                     // ignore: use_build_context_synchronously
                     context: context,
-                    screen: RegisterScreen(pageController: PageController()));
+                    screen: const AuthScreen(),
+                    replace: true);
+                Fluttertoast.showToast(msg: "Succesfly logout");
               },
               icon: const Icon(Icons.logout_outlined))
         ],
