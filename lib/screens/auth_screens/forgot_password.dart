@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:life_sync/bloc/auth_bloc/bloc/auth_bloc.dart';
+import 'package:life_sync/bloc/auth/auth_bloc.dart';
 
 import '../../common/buttons/bold_button.dart';
 
@@ -16,7 +16,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _mail = TextEditingController();
-  FocusNode _mailFocus = FocusNode();
+  final FocusNode _mailFocus = FocusNode();
   final _fKey = GlobalKey<FormState>();
 
   @override
