@@ -5,6 +5,11 @@ import 'package:life_sync/common/constants/app_collection.dart';
 import '../common/models/user_model.dart';
 
 class AuthRepo {
+  
+
+
+
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Future<User?> signInMethod(String mail, String pass) async {
     try {
@@ -21,23 +26,24 @@ class AuthRepo {
     return null;
   }
 
-  Future<bool> signUpMethod(String email, String password, String name) async {
+  Future<User?> signUpMethod(String email, String password, String name) async {
     try {
       UserCredential? credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      if (credential.user == null) return false;
+      if (credential.user == null) return null;
 
       await usersCollection.doc(credential.user?.uid).set({
         "mail": email,
         "uid": credential.user?.uid,
         "name": name,
       });
+      
       await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
       await FirebaseAuth.instance.currentUser?.reload();
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.toString());
     }
-    return false;
+    return null;
   }
 
   Future<void> passwordResetMethod(String fmail) async {

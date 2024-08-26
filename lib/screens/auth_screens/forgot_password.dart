@@ -96,7 +96,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             msg: "Password reset email send to your Mail");
                       }
                     },
-                    text: "Submit"),
+                    child: Text("Submit"),),
               ),
               SizedBox(
                 height: 60.h,
