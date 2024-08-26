@@ -33,7 +33,7 @@ class _BoldButtonState extends State<BoldButton> {
           ),
         ),
         onPressed: widget.onPressed,
-        child: widget.child,
+        child: Center(child: widget.child),
       ),
     );
   }

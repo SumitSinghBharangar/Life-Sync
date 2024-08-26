@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:life_sync/enum/enum.dart';
 import 'package:life_sync/repositories/auth_repo.dart';
+import 'package:life_sync/utils/utils.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -22,6 +24,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(state.copyWith(loginStatus: LoginStatus.success));
     } on IncorrectCredentailsAuthServicesException {
       emit(state.copyWith(loginStatus: LoginStatus.error));
+    } on UserIncompleteProfileAuthServicesException{
+      emit(state.copyWith(loginStatus: LoginStatus.incomplete));
+      
     }
     // User? user = await authRepo.signInMethod(event.mail, event.pass);
 
@@ -33,14 +38,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     // }
   }
 
-  FutureOr<void> _signUpButtonEvent(
+  Future<bool> _signUpButtonEvent(
       SignUpButtonEvent event, Emitter<AuthState> emit) async {
     emit(state.copyWith(registerStatus: RegisterStatus.loading));
     try {
-      await authRepo.signUpMethod(event.fullname, event.email, event.password);
+      await authRepo.userSignUp(event.fullname, event.email, event.password);
       emit(state.copyWith(registerStatus: RegisterStatus.success));
+      return true;
     } on IncorrectCredentailsAuthServicesException {
       emit(state.copyWith(registerStatus: RegisterStatus.error));
+      return false;
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+      return false;
     }
 
     // bool user = await authRepo.signUpMethod(event.email, event.password,event.fullname);

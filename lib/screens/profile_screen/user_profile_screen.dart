@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bounce/bounce.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,12 +12,14 @@ import 'package:iconly/iconly.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:life_sync/common/buttons/bold_button.dart';
 import 'package:life_sync/common/buttons/round_bold_button.dart';
 import 'package:life_sync/common/buttons/scale_button.dart';
 import 'package:life_sync/common/models/user_model.dart';
 import 'package:life_sync/screens/home/home_screen.dart';
 import 'package:life_sync/screens/onboarding/onbording_screen.dart';
 import 'package:life_sync/utils/utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -48,18 +51,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: EdgeInsets.symmetric(horizontal: 24.h),
         child: Form(
           key: _fKey,
           child: Column(
             children: [
-              SizedBox(height: MediaQuery.paddingOf(context).top + 20),
+              SizedBox(height: MediaQuery.paddingOf(context).top + 20.h),
               Row(
                 children: [
-                  const Text(
+                  Text(
                     "Complete your\nProfile",
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 28.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -78,7 +81,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               Center(
                 child: ScaleButton(
                   onTap: () async {
@@ -101,7 +104,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       : Container(
                           height: 160.h,
                           width: 160.h,
-                          padding: const EdgeInsets.all(54),
+                          padding: EdgeInsets.all(54.h),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.grey.shade200,
@@ -114,7 +117,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 30.h),
               TextFormField(
                 onTapOutside: (event) {
                   FocusManager.instance.primaryFocus?.unfocus();
@@ -132,16 +135,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 decoration: InputDecoration(
                   hintText: "Full Name",
                   prefixIcon: const Icon(Iconsax.user_octagon),
-                  contentPadding: const EdgeInsets.all(16),
+                  contentPadding: EdgeInsets.all(16.h),
                   fillColor: Colors.grey.shade200,
                   filled: true,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.h),
                     borderSide: BorderSide.none,
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 24.h),
               TextFormField(
                 onTapOutside: (event) {
                   FocusManager.instance.primaryFocus?.unfocus();
@@ -161,16 +164,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 decoration: InputDecoration(
                   hintText: "Phone",
                   prefixIcon: const Icon(Iconsax.call),
-                  contentPadding: const EdgeInsets.all(16),
+                  contentPadding: EdgeInsets.all(16.h),
                   fillColor: Colors.grey.shade200,
                   filled: true,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.h),
                     borderSide: BorderSide.none,
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 24.h),
               TextFormField(
                 onTapOutside: (event) {
                   FocusManager.instance.primaryFocus?.unfocus();
@@ -188,11 +191,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 decoration: InputDecoration(
                   hintText: "Address",
                   prefixIcon: const Icon(Iconsax.building_4),
-                  contentPadding: const EdgeInsets.all(16),
+                  contentPadding: EdgeInsets.all(16.h),
                   fillColor: Colors.grey.shade200,
                   filled: true,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.h),
                     borderSide: BorderSide.none,
                   ),
                 ),
@@ -201,47 +204,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               FractionallySizedBox(
                 widthFactor: 1,
                 child: RoundBoldButton(
-                    onPressed: () async {
-                      if (_fKey.currentState?.validate() ?? false) {
-                        if (profile == null) {
-                          Fluttertoast.showToast(
-                              msg: "Please select a profile picture");
-                          return;
-                        }
-                        var user = FirebaseAuth.instance.currentUser!;
-                        var imageUrl = await fileToFirebase(
-                          path: ["users", user.uid],
-                          name: "profile",
-                          file: profile!,
-                        );
-                        String? token =
-                            await FirebaseMessaging.instance.getToken();
-                        UserModel model = UserModel(
-                          mail: user.email!,
-                          homeAddress: _address.text.trim(),
-                          image: imageUrl,
-                          imageUrl: imageUrl,
-                          name: _name.text.trim(),
-                          phone: _phone.text.trim(),
-                          tokens: [token!],
-                          uid: user.uid,
-                        );
-                        if (context.mounted) {
-                          await updateProfile(model);
-                          // here we made the bloc for uploading the profile information by made the function of updating the profile
-                          // then make the navigation to the main screen by binding it in the bloc listner
-                        }
-                        if (context.mounted) {
-                          Utils.go(
-                              context: context,
-                              screen: const HomeScreen(),
-                              replace: true);
-                        }
-                      }
-                    },
-                    text: "Continue"),
+                  onPressed: () {},
+                  child: Text(
+                    "Continue",
+                    style: TextStyle(fontSize: 24.sp),
+                  ),
+                ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               Wrap(
                 children: [
                   const FittedBox(
@@ -269,7 +239,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 50),
+              SizedBox(height: 50.h),
             ],
           ),
         ),
@@ -287,3 +257,34 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return c == null ? null : File(c.path);
   }
 }
+
+
+// if (_fKey.currentState?.validate() ?? false) {
+//                         if (profile == null) {
+//                           Fluttertoast.showToast(
+//                               msg: "Please select a profile picture");
+//                           return;
+//                         }
+//                         var user = FirebaseAuth.instance.currentUser!;
+//                         var imageUrl = await fileToFirebase(
+//                           path: ["users", user.uid],
+//                           name: "profile",
+//                           file: profile!,
+//                         );
+//                         String? token =
+//                             await FirebaseMessaging.instance.getToken();
+//                         UserModel model = UserModel(
+//                           mail: user.email!,
+//                           homeAddress: _address.text.trim(),
+//                           image: imageUrl,
+//                           imageUrl: imageUrl,
+//                           name: _name.text.trim(),
+//                           phone: _phone.text.trim(),
+//                           tokens: [token!],
+//                           uid: user.uid,
+//                         );
+//                         if (context.mounted) {
+//                           await updateProfile(model);
+//                           // here we made the bloc for uploading the profile information by made the function of updating the profile
+//                           // then make the navigation to the main screen by binding it in the bloc listner
+//                         }

@@ -1,16 +1,20 @@
+import 'package:bounce/bounce.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:life_sync/bloc/auth/auth_bloc.dart';
+import 'package:life_sync/common/buttons/bold_button.dart';
 import 'package:life_sync/enum/enum.dart';
 import 'package:life_sync/screens/home/home_screen.dart';
+import 'package:life_sync/screens/profile_screen/user_profile_screen.dart';
 
 import 'package:life_sync/utils/utils.dart';
 import 'package:neopop/neopop.dart';
 
-import '../../common/buttons/bold_button.dart';
+import '../../common/buttons/round_bold_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -137,40 +141,44 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 40.h,
             ),
             FractionallySizedBox(
-                widthFactor: 1,
-                child: BlocListener<AuthBloc, AuthState>(
-                  listenWhen: (previous, current) =>
+              widthFactor: 1,
+              child: Bounce(
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  buildWhen: (previous, current) =>
                       previous.loginStatus != current.loginStatus,
-                  listener: (context, state) {},
-                  child: BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, state) {
-                      return NeoPopButton(
-                        color: Colors.indigoAccent,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 15),
-                          child: state.loginStatus == LoginStatus.loading
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [Text("Sign In")],
-                                )
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Sign In"),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
-                        ),
-                      );
-                    },
-                  ),
-                )),
+                  builder: (context, state) {
+                    return RoundBoldButton(
+                        onPressed: () async {
+                          if (_fKey.currentState!.validate()) {
+                            context.read<AuthBloc>().add(LoginButtonEvent(
+                                mail: _mail.text.trim(),
+                                pass: _password.text.trim()));
+                            if (context.mounted) {
+                              state.loginStatus == LoginStatus.incomplete
+                                  ? Utils.go(
+                                      context: context,
+                                      screen: const UserProfileScreen(),
+                                      replace: true)
+                                  : Utils.go(
+                                      context: context,
+                                      screen: const HomeScreen(),
+                                      replace: true);
+                            }
+                          }
+                        },
+                        child: state.loginStatus == LoginStatus.loading
+                            ? CupertinoActivityIndicator(
+                                color: Colors.white,
+                                radius: 24,
+                              )
+                            : Text(
+                                "Sign in",
+                                style: TextStyle(fontSize: 24.sp),
+                              ));
+                  },
+                ),
+              ),
+            ),
             SizedBox(
               height: 40.h,
             ),

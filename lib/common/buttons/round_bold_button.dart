@@ -7,11 +7,11 @@ class RoundBoldButton extends StatefulWidget {
   const RoundBoldButton({
     super.key,
     required this.onPressed,
-    required this.text,
+    required this.child,
   });
 
   final FutureOr<void> Function() onPressed;
-  final String text;
+  final Widget child;
 
   @override
   State<RoundBoldButton> createState() => _RoundBoldButtonState();
@@ -53,13 +53,7 @@ class _RoundBoldButtonState extends State<RoundBoldButton> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              widget.text,
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
+            widget.child,
             AnimatedContainer(
               height: _isLoadig ? 25 : 0,
               width: _isLoadig ? 25.w + 20 : 0,

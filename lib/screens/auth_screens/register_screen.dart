@@ -1,9 +1,14 @@
+import 'package:bounce/bounce.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:life_sync/bloc/auth/auth_bloc.dart';
 import 'package:life_sync/common/buttons/bold_button.dart';
+import 'package:life_sync/common/buttons/round_bold_button.dart';
+import 'package:life_sync/enum/enum.dart';
+import 'package:life_sync/screens/profile_screen/user_profile_screen.dart';
 
 import '../../utils/utils.dart';
 
@@ -254,19 +259,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               FractionallySizedBox(
                 widthFactor: 1,
-                child: BoldButton(
-                  onPressed: () async {
-                    if (_fKey.currentState?.validate() ?? false) {
-                      context.read<AuthBloc>().add(
-                            SignUpButtonEvent(
-                              email: _mail.text.trim(),
-                              password: _pass.text.trim(),
-                              fullname: _name.text.trim(),
-                            ),
-                          );
-                    }
-                  },
-                  child: Text("create an account"),
+                child: Bounce(
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                    buildWhen: (previous, current) =>
+                        previous.registerStatus != current.registerStatus,
+                    builder: (context, state) {
+                      return RoundBoldButton(
+                        onPressed: () async {
+                          if (_fKey.currentState?.validate() ?? false) {
+                            context.read<AuthBloc>().add(
+                                  SignUpButtonEvent(
+                                    email: _mail.text.trim(),
+                                    password: _pass.text.trim(),
+                                    fullname: _name.text.trim(),
+                                  ),
+                                );
+                            if (context.mounted) {
+                              // Utils.go(context: context, screen: const UserProfileScreen());
+                            }
+                          }
+                        },
+                        child: state.registerStatus == RegisterStatus.loading
+                            ? const CupertinoActivityIndicator
+                                .partiallyRevealed(
+                                color: Colors.white,
+                                radius: 24,
+                              )
+                            : Text(
+                                "create an account",
+                                style: TextStyle(fontSize: 24.sp),
+                              ),
+                      );
+                    },
+                  ),
                 ),
               ),
               SizedBox(

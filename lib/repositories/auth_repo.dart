@@ -11,39 +11,40 @@ class AuthRepo {
 
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<User?> signInMethod(String mail, String pass) async {
-    try {
-      UserCredential? credential =
-          await _auth.signInWithEmailAndPassword(email: mail, password: pass);
-      return credential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        print("User not found");
-      } else if (e.code == 'wrong-password') {
-        print("wrong password provided");
-      }
-    }
-    return null;
-  }
+  // Future<User?> signInMethod(String mail, String pass) async {
+  //   try {
+  //     UserCredential? credential =
+  //         await _auth.signInWithEmailAndPassword(email: mail, password: pass);
+  //     return credential.user;
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == "user-not-found") {
+  //       print("User not found");
+  //     } else if (e.code == 'wrong-password') {
+  //       print("wrong password provided");
+  //     }
+  //   }
+  //   return null;
+  // }
 
-  Future<User?> signUpMethod(String email, String password, String name) async {
+  Future<bool> userSignUp(String fullName, String mail, String password) async {
     try {
-      UserCredential? credential = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      if (credential.user == null) return null;
+      var u = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: mail, password: password);
 
-      await usersCollection.doc(credential.user?.uid).set({
-        "mail": email,
-        "uid": credential.user?.uid,
-        "name": name,
+      if (u.user == null) return false;
+
+      await usersCollection.doc(u.user?.uid).set({
+        'mail': mail,
+        'uid': u.user!.uid,
+        'name': fullName,
       });
-      
-      await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
+
+      await FirebaseAuth.instance.currentUser?.updateDisplayName(fullName);
       await FirebaseAuth.instance.currentUser?.reload();
-    } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
+    } catch (e) {
+      return false;
     }
-    return null;
+    return false;
   }
 
   Future<void> passwordResetMethod(String fmail) async {
