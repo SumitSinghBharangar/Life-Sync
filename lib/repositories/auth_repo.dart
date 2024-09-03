@@ -1,30 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:life_sync/common/constants/app_collection.dart';
+import 'package:life_sync/common/models/master_model.dart';
 
 import '../common/models/user_model.dart';
 
 class AuthRepo {
-  
-
-
-
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // Future<User?> signInMethod(String mail, String pass) async {
-  //   try {
-  //     UserCredential? credential =
-  //         await _auth.signInWithEmailAndPassword(email: mail, password: pass);
-  //     return credential.user;
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == "user-not-found") {
-  //       print("User not found");
-  //     } else if (e.code == 'wrong-password') {
-  //       print("wrong password provided");
-  //     }
-  //   }
-  //   return null;
-  // }
 
   Future<bool> userSignUp(String fullName, String mail, String password) async {
     try {
@@ -79,6 +61,25 @@ class AuthRepo {
   }
 }
 
+Future<bool> fetchUser() async {
+  try {
+    String id = FirebaseAuth.instance.currentUser!.uid;
+
+    var user = await usersCollection.doc(id).get();
+
+    if (user.exists) {
+      if (user.data()?['imageUrl'] == null) {
+        throw UserIncompleteProfileAuthServicesException();
+      } else {
+        return true;
+      }
+    }
+  } on Exception {
+    rethrow;
+  }
+  return false;
+}
+
 abstract class AuthServicesException implements Exception {}
 
 abstract class IncompleteProfileAuthServicesException
@@ -91,4 +92,3 @@ class DriverIncompleteProfileAuthServicesException
     extends IncompleteProfileAuthServicesException {}
 
 class IncorrectCredentailsAuthServicesException extends AuthServicesException {}
-
