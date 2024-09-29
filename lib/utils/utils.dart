@@ -33,7 +33,8 @@ class Utils {
             context,
             CupertinoPageRoute(
               builder: (context) => screen,
-            ));
+            ),
+          );
   }
 
   static Future<bool> requestPermission() async {
@@ -188,9 +189,8 @@ Future<String> fileToFirebase({
 
   return url;
 }
-Future<void> updateProfile(MasterPerson model)async{
+
+Future<void> updateProfile(MasterPerson model) async {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   await usersCollection.doc(uid).set((model as UserModel).toMap());
-  
-
 }

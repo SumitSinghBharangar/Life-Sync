@@ -1,14 +1,10 @@
 import 'dart:math';
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:life_sync/utils/utils.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../auth_screens/auth_screen.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnbordingScreen extends StatefulWidget {
   const OnbordingScreen({super.key});
@@ -138,10 +134,10 @@ class _OnbordingScreenState extends State<OnbordingScreen>
                         child: GestureDetector(
                           onTap: () {
                             if (page.round() == 3) {
-                              Utils.go(
-                                  context: context,
-                                  screen: const AuthScreen(),
-                                  replace: true);
+                              // Utils.go(
+                              //     context: context,
+                              //     screen: const AuthScreen(),
+                              //     replace: true);
                               return;
                             }
                             _controller.dispose();
@@ -220,7 +216,7 @@ class _OnbordingScreenState extends State<OnbordingScreen>
     );
   }
 
-  Widget _rotatedBoxes(){
+  Widget _rotatedBoxes() {
     return Stack(
       children: [
         Positioned.fill(
@@ -349,4 +345,3 @@ class OnboardingPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
-

@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,8 +7,8 @@ import 'package:life_sync/bloc/auth/auth_bloc.dart';
 import 'package:life_sync/firebase_options.dart';
 import 'package:life_sync/repositories/auth_repo.dart';
 import 'package:life_sync/screens/splash/splash_screen.dart';
-
-import 'common/appcolor.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'common/constants/appcolor.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,12 +38,29 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData(
-              appBarTheme:
-                  const AppBarTheme(elevation: 0, scrolledUnderElevation: 0),
+              appBarTheme: AppBarTheme(
+                scrolledUnderElevation: 0,
+                elevation: 0,
+                backgroundColor: const Color.fromARGB(255, 244, 255, 244),
+                iconTheme: const IconThemeData(
+                  size: 30,
+                  color: Colors.black,
+                ),
+                titleTextStyle: TextStyle(
+                  fontFamily: GoogleFonts.beVietnamPro().fontFamily,
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              fontFamily: GoogleFonts.inter().fontFamily,
+              bottomAppBarTheme: const BottomAppBarTheme(
+                color: Color.fromARGB(255, 244, 255, 244),
+              ),
               scaffoldBackgroundColor: Colors.white,
               colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.indigoAccent,
-                surface: AppColors.whiteColor,
+                seedColor: AppColors.greenColor,
+                surface: Colors.white,
               ),
               useMaterial3: true,
             ),

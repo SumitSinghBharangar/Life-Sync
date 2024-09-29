@@ -1,25 +1,20 @@
 import 'dart:io';
 
-import 'package:bounce/bounce.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconly/iconly.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:life_sync/common/buttons/bold_button.dart';
 import 'package:life_sync/common/buttons/round_bold_button.dart';
 import 'package:life_sync/common/buttons/scale_button.dart';
-import 'package:life_sync/common/models/user_model.dart';
-import 'package:life_sync/screens/home/home_screen.dart';
 import 'package:life_sync/screens/onboarding/onbording_screen.dart';
 import 'package:life_sync/utils/utils.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
