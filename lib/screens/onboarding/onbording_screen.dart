@@ -6,6 +6,9 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../utils/utils.dart';
+import '../auth_screens/login_screen.dart';
+
 class OnbordingScreen extends StatefulWidget {
   const OnbordingScreen({super.key});
 
@@ -134,10 +137,10 @@ class _OnbordingScreenState extends State<OnbordingScreen>
                         child: GestureDetector(
                           onTap: () {
                             if (page.round() == 3) {
-                              // Utils.go(
-                              //     context: context,
-                              //     screen: const AuthScreen(),
-                              //     replace: true);
+                              Utils.go(
+                                  context: context,
+                                  screen: const LoginScreen(),
+                                  replace: true);
                               return;
                             }
                             _controller.dispose();

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:life_sync/common/buttons/dynamic_button.dart';
+import 'package:life_sync/screens/auth_screens/otp_screen.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../common/constants/custom_textfield.dart';
+import '../../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -62,6 +65,14 @@ class _LoginScreenState extends State<LoginScreen> {
             DynamicButton.fromText(
               // isLoading: w.isLoading,
               onPressed: () {
+                if (_phone.text.length == 6) {
+                  Utils.go(
+                      context: context,
+                      screen: const OtpScreen(),
+                      replace: true);
+                } else {
+                  Fluttertoast.showToast(msg: "OTP must have 6 chars");
+                }
                 // w.sendOtp(
                 //     phone: _phone.text,
                 //     onSend: (_) {

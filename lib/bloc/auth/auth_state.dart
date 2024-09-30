@@ -1,67 +1,27 @@
 part of 'auth_bloc.dart';
 
 class AuthState extends Equatable {
-  final String email;
-  final String fullname;
-  final RegisterStatus registerStatus;
-  final LoginStatus loginStatus;
-  final String mail;
-  final String pass;
-  final String password;
-  final String fmail;
-  final String loginmsg;
-  final String signupmsg;
+  final int? phone;
+  final bool isLoading;
+
   const AuthState({
-    this.pass = '',
-    this.fullname = '',
-    this.password = '',
-    this.email = '',
-    this.mail = '',
-    this.fmail = '',
-    this.loginmsg = "",
-    this.signupmsg = "",
-    this.loginStatus = LoginStatus.initail,
-    this.registerStatus = RegisterStatus.initail,
+    this.phone,
+    this.isLoading = false,
   });
 
   AuthState copyWith({
-    String? mail,
-    String? fmail,
-    String? email,
-    String? pass,
-    String? password,
-    String? fullname,
-    String? loginmsg,
-    String? signupmsg,
-    LoginStatus? loginStatus,
-    RegisterStatus? registerStatus,
-
+    int? phone,
+    bool? isLoading,
   }) {
     return AuthState(
-      fullname: fullname ?? this.fullname,
-      email: email ?? this.email,
-      pass: pass ?? this.pass,
-      mail: mail ?? this.mail,
-      fmail: fmail ?? this.fmail,
-      password: password ?? this.password,
-      loginmsg: loginmsg ?? this.loginmsg,
-      signupmsg: signupmsg ?? this.signupmsg,
-      loginStatus: loginStatus ?? this.loginStatus,
-      registerStatus: registerStatus ?? this.registerStatus,
+      phone: this.phone,
+      isLoading: this.isLoading,
     );
   }
 
   @override
   List<Object> get props => [
-        mail,
-        email,
-        pass,
-        password,
-        loginStatus,
-        registerStatus,
-        fmail,
-        loginmsg,
-        signupmsg,
-        fullname,
+        phone!,
+        isLoading,
       ];
 }

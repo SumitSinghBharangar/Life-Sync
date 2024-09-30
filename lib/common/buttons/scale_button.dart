@@ -1,12 +1,15 @@
 import 'package:flutter/widgets.dart';
 
 class ScaleButton extends StatefulWidget {
-  const ScaleButton({super.key, required this.onTap, required this.child});
+  const ScaleButton(
+      {super.key, required this.onTap, required this.child, this.scale});
 
   @override
   State<ScaleButton> createState() => _ScaleButtonState();
   final VoidCallback? onTap;
   final Widget child;
+
+  final double? scale;
 }
 
 class _ScaleButtonState extends State<ScaleButton> {
@@ -14,7 +17,8 @@ class _ScaleButtonState extends State<ScaleButton> {
   @override
   Widget build(BuildContext context) {
     return AnimatedScale(
-      scale: isPressed ? .95 : 1,
+      scale: isPressed ? (widget.scale ?? .95) : 1,
+      curve: Curves.elasticInOut,
       duration: const Duration(milliseconds: 100),
       child: GestureDetector(
         onTap: () {
@@ -31,6 +35,7 @@ class _ScaleButtonState extends State<ScaleButton> {
           }
         },
         onTapDown: (_) {
+          FocusManager.instance.primaryFocus?.unfocus();
           if (widget.onTap != null) {
             setState(() {
               isPressed = true;

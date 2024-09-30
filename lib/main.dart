@@ -6,7 +6,8 @@ import 'package:life_sync/bloc/auth/auth_bloc.dart';
 
 import 'package:life_sync/firebase_options.dart';
 import 'package:life_sync/repositories/auth_repo.dart';
-import 'package:life_sync/screens/splash/splash_screen.dart';
+import 'package:life_sync/screens/onboarding/onbording_screen.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'common/constants/appcolor.dart';
 
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
               ),
               useMaterial3: true,
             ),
-            home: const SplashScreen(),
+            home: const OnbordingScreen(),
             debugShowCheckedModeBanner: false,
           );
         },

@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:iconsax/iconsax.dart';
+import 'package:life_sync/screens/profile_screen/user_profile_screen.dart';
+import 'package:life_sync/utils/utils.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../common/buttons/dynamic_button.dart';
@@ -108,6 +110,10 @@ class _OtpScreenState extends State<OtpScreen> {
                       // isLoading: w.isLoading,
                       onPressed: () async {
                         if (otp.text.length == 6) {
+                          Utils.go(
+                              context: context,
+                              screen: const UserProfileScreen(),
+                              replace: true);
                           // var r = await w.verifyOTP(otp: otp.text);
                           // if (r) {
                           //   if (context.mounted) {
