@@ -15,10 +15,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    MultiProvider(
-      providers: [],
-      child: const MyApp(),
-    ),
+    // MultiProvider(
+    //   providers: [],
+    //   child: const MyApp(),
+    // ),
+    const MyApp(),
   );
 }
 
