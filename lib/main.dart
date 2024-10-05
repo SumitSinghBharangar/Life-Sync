@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:life_sync/features/onbording_screens/splashscreen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,9 +16,7 @@ void main() async {
   );
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthServices()),
-      ],
+      providers: [],
       child: const MyApp(),
     ),
   );
