@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:life_sync/features/auth/screens/login_Screen.dart';
+import 'package:life_sync/utils/utils.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -134,11 +136,10 @@ class _OnbordingScreenState extends State<OnbordingScreen>
                         child: GestureDetector(
                           onTap: () {
                             if (page.round() == 3) {
-                              // Utils.go(
-                              //     context: context,
-                              //     screen: const LoginScreen(),
-                              //     replace: true);
-                              return;
+                              Utils.go(
+                                  context: context,
+                                  screen: const LoginScreen(),
+                                  replace: true);
                             }
                             _controller.dispose();
                             _controller = AnimationController(
@@ -147,7 +148,7 @@ class _OnbordingScreenState extends State<OnbordingScreen>
                             );
                             _animation = ColorTween(
                               begin: _animation.value!,
-                              end: circleColors[page.round() + 1],
+                              end: circleColors[page.round()],
                             ).animate(_controller)
                               ..addListener(() => setState(() {}));
                             _controller.forward();

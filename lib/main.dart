@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:life_sync/features/onbording_screens/splashscreen.dart';
+import 'package:life_sync/features/auth/sevices/auth_service.dart';
+import 'package:life_sync/features/onbording_screens/on_bording_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,11 +16,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    // MultiProvider(
-    //   providers: [],
-    //   child: const MyApp(),
-    // ),
-    const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthServices()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 

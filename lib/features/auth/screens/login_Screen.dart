@@ -5,7 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:life_sync/common/buttons/dynamic_button.dart';
 import 'package:life_sync/common/widgets/custom_textfield.dart';
-import 'package:life_sync/features/onbording_screens/sevices/auth_service.dart';
+import 'package:life_sync/features/auth/screens/otp_screen.dart';
+import 'package:life_sync/features/auth/sevices/auth_service.dart';
+import 'package:life_sync/utils/utils.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +22,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _phone = TextEditingController();
+  bool isFieldValidate = false;
   bool _agreed = false;
 
   @override
@@ -64,6 +67,22 @@ class _LoginScreenState extends State<LoginScreen> {
               autofocus: true,
               removeFocusOutside: true,
               isNumber: true,
+              onChanged: (_) {
+                if (_.length == 10) {
+                  setState(() {
+                    isFieldValidate = true;
+                  });
+
+                  FocusManager.instance.primaryFocus?.unfocus();
+                } else {
+                  setState(() {
+                    isFieldValidate = false;
+                  });
+                }
+                if (_.length > 10) {
+                  _phone.text = _.substring(0, 6);
+                }
+              },
               // decoration: InputDecoration(
               //   contentPadding:
               //       const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
@@ -135,24 +154,51 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            DynamicButton.fromText(
-              isLoading: w.isLoading,
-              onPressed: () {
-                if (!_agreed) {
-                  Fluttertoast.showToast(
-                      msg: "Please agree to our Terms & conditions");
-                } else {
-                  w.sendOtp(
-                      phone: _phone.text,
-                      onSend: (_) {
-                        if (_) {
-                          // context.go(Routes.otpScreen.path);
-                        }
-                      });
-                }
-              },
-              text: "SEND OTP",
+            DynamicButton(
+              onPressed: isFieldValidate
+                  ? () {
+                      if (!_agreed) {
+                        Fluttertoast.showToast(
+                            msg: "Please agree to our Terms & conditions");
+                      } else {
+                        w.sendOtp(
+                            phone: _phone.text,
+                            onSend: (_) {
+                              if (_) {
+                                Utils.go(
+                                    context: context,
+                                    screen: const OtpScreen());
+                              }
+                            });
+                      }
+                    }
+                  : null,
+              child: Text(
+                "SEND OTP",
+                style: TextStyle(
+                  fontSize: 19.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
+            // DynamicButton.fromText(
+            //   isLoading: w.isLoading,
+            //   onPressed: () {
+            //     if (!_agreed) {
+            //       Fluttertoast.showToast(
+            //           msg: "Please agree to our Terms & conditions");
+            //     } else {
+            //       w.sendOtp(
+            //           phone: _phone.text,
+            //           onSend: (_) {
+            //             if (_) {
+            //               // context.go(Routes.otpScreen.path);
+            //             }
+            //           });
+            //     }
+            //   },
+            //   text: "SEND OTP",
+            // ),
             SizedBox(
               height: MediaQuery.paddingOf(context).bottom + 25,
             ),

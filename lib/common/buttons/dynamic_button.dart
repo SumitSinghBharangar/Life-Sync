@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:life_sync/features/onbording_screens/sevices/scale_button.dart';
+import 'package:life_sync/common/buttons/scale_button.dart';
 
 class DynamicButton extends StatefulWidget {
   const DynamicButton(
