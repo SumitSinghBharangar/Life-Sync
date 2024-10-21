@@ -5,7 +5,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:life_sync/common/app_colors.dart';
 import 'package:life_sync/common/buttons/dynamic_button.dart';
 import 'package:life_sync/common/widgets/custom_textfield.dart';
+import 'package:life_sync/features/auth/screens/complete_profile.dart';
 import 'package:life_sync/features/auth/sevices/auth_service.dart';
+import 'package:life_sync/utils/utils.dart';
+
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -121,6 +124,9 @@ class _OtpScreenState extends State<OtpScreen> {
                           var r = await w.verifyOTP(otp: otp.text);
                           if (r) {
                             if (context.mounted) {
+                              Utils.go(
+                                  context: context,
+                                  screen: const UserCompleteProfile());
                               // context.go(Routes.home.path);
                             }
                           } else {
