@@ -30,7 +30,6 @@ class _SmartHomeScreenState extends State<SmartHomeScreen> {
         ? Utils.go(
             context: context,
             screen: const UserCompleteProfile(),
-            replace: true,
           )
         : null;
   }
