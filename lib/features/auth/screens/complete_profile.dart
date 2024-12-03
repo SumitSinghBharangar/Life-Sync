@@ -257,6 +257,7 @@ class _UserCompleteProfileState extends State<UserCompleteProfile> {
                             msg: "Please select a profile picture");
                         return;
                       }
+                      showLoading(context);
 
                       var user = FirebaseAuth.instance.currentUser!;
                       var imageUrl = await w.fileToFirebase(
@@ -289,7 +290,9 @@ class _UserCompleteProfileState extends State<UserCompleteProfile> {
 
                       await usersCollection.doc(user.uid).set((model).toMap());
 
-                      if (context.mounted) {
+                      if (context.mounted){
+                        Navigator.pop(context);
+                        
                         // go to home page
                       }
                     }
