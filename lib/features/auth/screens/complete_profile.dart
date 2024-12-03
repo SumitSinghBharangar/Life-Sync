@@ -16,6 +16,7 @@ import 'package:life_sync/common/buttons/scale_button.dart';
 import 'package:life_sync/common/constants/app_collection.dart';
 import 'package:life_sync/common/models/user_model.dart';
 import 'package:life_sync/features/auth/sevices/auth_service.dart';
+import 'package:life_sync/features/home/smart_home_screen.dart';
 import 'package:life_sync/features/onbording_screens/on_bording_screen.dart';
 import 'package:life_sync/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -288,11 +289,17 @@ class _UserCompleteProfileState extends State<UserCompleteProfile> {
                       await user.updateDisplayName(_name.text);
                       await user.updatePhotoURL(imageUrl);
 
-                      await usersCollection.doc(user.uid).set((model).toMap());
+                      await usersCollection
+                          .doc(user.uid)
+                          .update((model).toMap());
 
-                      if (context.mounted){
+                      if (context.mounted) {
                         Navigator.pop(context);
-                        
+                        Utils.go(
+                            context: context,
+                            screen: const SmartHomeScreen(),
+                            replace: true);
+
                         // go to home page
                       }
                     }

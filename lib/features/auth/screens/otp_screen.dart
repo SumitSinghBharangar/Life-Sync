@@ -7,6 +7,8 @@ import 'package:life_sync/common/buttons/dynamic_button.dart';
 import 'package:life_sync/common/widgets/custom_textfield.dart';
 import 'package:life_sync/features/auth/screens/complete_profile.dart';
 import 'package:life_sync/features/auth/sevices/auth_service.dart';
+import 'package:life_sync/features/home/root_screen.dart';
+import 'package:life_sync/features/home/smart_home_screen.dart';
 import 'package:life_sync/utils/utils.dart';
 
 import 'package:lottie/lottie.dart';
@@ -97,17 +99,6 @@ class _OtpScreenState extends State<OtpScreen> {
                         }
                       },
                       isNumber: true,
-
-                      //   decoration: InputDecoration(
-                      //     contentPadding: const EdgeInsets.symmetric(
-                      //         vertical: 14, horizontal: 24),
-                      //     border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(12),
-                      //       borderSide: BorderSide.none,
-                      //     ),
-                      //     hintText: "Enter OTP",
-                      //     filled: true,
-                      //   ),
                       hintText: "Enter OTP",
                       iconData: Iconsax.password_check,
                     ),
@@ -125,9 +116,10 @@ class _OtpScreenState extends State<OtpScreen> {
                           if (r) {
                             if (context.mounted) {
                               Utils.go(
-                                  context: context,
-                                  screen: const UserCompleteProfile());
-                              // context.go(Routes.home.path);
+                                context: context,
+                                screen: const SmartHomeScreen(),
+                                replace: true,
+                              );
                             }
                           } else {
                             Fluttertoast.showToast(msg: "Invalid OTP");

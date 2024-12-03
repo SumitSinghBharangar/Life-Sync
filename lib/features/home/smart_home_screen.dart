@@ -1,10 +1,13 @@
 import 'dart:math';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:life_sync/features/auth/screens/complete_profile.dart';
 import 'package:life_sync/features/widgets/device_grid_screen.dart';
 import 'package:life_sync/features/widgets/quick_action_widget.dart';
 import 'package:life_sync/features/widgets/room_list_widget.dart';
+import 'package:life_sync/utils/utils.dart';
 
 class SmartHomeScreen extends StatefulWidget {
   const SmartHomeScreen({super.key});
@@ -14,6 +17,24 @@ class SmartHomeScreen extends StatefulWidget {
 }
 
 class _SmartHomeScreenState extends State<SmartHomeScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchUser();
+    });
+    super.initState();
+  }
+
+  _fetchUser() async {
+    FirebaseAuth.instance.currentUser?.displayName == null
+        ? Utils.go(
+            context: context,
+            screen: const UserCompleteProfile(),
+            replace: true,
+          )
+        : null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(

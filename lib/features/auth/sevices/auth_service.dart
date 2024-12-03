@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -77,16 +78,6 @@ class AuthServices extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
 
-      String uid = FirebaseAuth.instance.currentUser!.uid;
-
-      var usr = await usersCollection.doc(uid).get();
-
-      if (usr.exists || usr.data() != null) {
-        Fluttertoast.showToast(msg: "Can't use this phone number to register.");
-
-        return false;
-      }
-
       await init();
       return true;
     } on FirebaseAuthException catch (e) {
@@ -131,9 +122,13 @@ class AuthServices extends ChangeNotifier {
     var u = FirebaseAuth.instance.currentUser!;
 
     var data = await usersCollection.doc(u.uid).get();
+    String? token = await FirebaseMessaging.instance.getToken();
 
     if (data.exists) {
-      user = UserModel.fromMap(data.data()!);
+      await usersCollection.doc(u.uid).update({
+        'tokens': FieldValue.arrayUnion([token])
+      });
+
       notifyListeners();
     } else {
       await usersCollection.doc(u.uid).set({
@@ -142,7 +137,8 @@ class AuthServices extends ChangeNotifier {
         'createdAt':
             Timestamp.fromDate(u.metadata.creationTime ?? DateTime.now()),
         'lastSignIn':
-            Timestamp.fromDate(u.metadata.lastSignInTime ?? DateTime.now())
+            Timestamp.fromDate(u.metadata.lastSignInTime ?? DateTime.now()),
+        'tokens': [token],
       });
     }
 
@@ -186,6 +182,4 @@ class AuthServices extends ChangeNotifier {
 
     return url;
   }
-
-  
 }
