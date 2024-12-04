@@ -23,9 +23,41 @@ class DeviceProvider with ChangeNotifier {
 
   List<DeviceModel> get devices => _devices;
 
-  void addDevice(DeviceModel device) {
-    _devices.add(device);
+  void addDevice(
+      {required String name,
+      required DeviceType type,
+      required String roomName}) {
+    // Generate a unique ID
+    String id = DateTime.now().millisecondsSinceEpoch.toString();
+
+    // Create new device
+    final newDevice =
+        DeviceModel(id: id, name: name, type: type, roomName: roomName);
+
+    // Add device to the list
+    _devices.add(newDevice);
     notifyListeners();
+  }
+
+  void deleteDevice(String id) {
+    _devices.removeWhere((device) => device.id == id);
+    notifyListeners();
+  }
+
+  void updateDevice(String id,
+      {String? name, DeviceType? type, String? roomName}) {
+    final index = _devices.indexWhere((device) => device.id == id);
+    if (index != -1) {
+      _devices[index] = DeviceModel(
+        id: id,
+        name: name ?? _devices[index].name,
+        type: type ?? _devices[index].type,
+        roomName: roomName ?? _devices[index].roomName,
+        status: _devices[index].status,
+        isConnected: _devices[index].isConnected,
+      );
+      notifyListeners();
+    }
   }
 
   void toggleDeviceStatus(String deviceId) {

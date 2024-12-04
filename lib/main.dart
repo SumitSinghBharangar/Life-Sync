@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:life_sync/features/auth/sevices/auth_service.dart';
-import 'package:life_sync/features/onbording_screens/on_bording_screen.dart';
+
 import 'package:life_sync/features/providers/device_provider.dart';
 import 'package:life_sync/features/providers/room_provider.dart';
 import 'package:life_sync/splash_screen.dart';

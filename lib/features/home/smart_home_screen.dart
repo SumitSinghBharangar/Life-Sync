@@ -55,60 +55,65 @@ class _SmartHomeScreenState extends State<SmartHomeScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: 22.w,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Manage Home",
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.grey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.paddingOf(context).top + 20.h,
                   ),
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.check_circle_outline,
+                  Text(
+                    "Manage Home",
+                    style: TextStyle(
+                      fontSize: 23.sp,
+                      color: Colors.grey,
                     ),
-                    SizedBox(
-                      width: 12.w,
-                    ),
-                    Text(
-                      "Quick Actions",
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.check_circle_outline,
                       ),
-                    ),
-                  ],
-                )
-                    .animate(
-                      delay: 200.ms,
-                    )
-                    .slideX(
-                        begin: 0.25,
-                        end: 0,
-                        duration: 0.5.seconds,
-                        curve: Curves.easeInOut)
-                    .fadeIn(duration: 0.5.seconds, curve: Curves.easeInOut),
-                QuickActionWidget(),
-                SizedBox(
-                  height: 10.h,
-                ),
-                RoomListWidget(),
-                SizedBox(
-                  height: 20.h,
-                ),
-                DeviceGridWidget(),
-                SizedBox(
-                  height: 10.h,
-                )
-              ],
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                      Text(
+                        "Quick Actions",
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  )
+                      .animate(
+                        delay: 200.ms,
+                      )
+                      .slideX(
+                          begin: 0.25,
+                          end: 0,
+                          duration: 0.5.seconds,
+                          curve: Curves.easeInOut)
+                      .fadeIn(duration: 0.5.seconds, curve: Curves.easeInOut),
+                  QuickActionWidget(),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  const RoomListWidget(),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  const DeviceGridWidget(),
+                  SizedBox(
+                    height: 10.h,
+                  )
+                ],
+              ),
             ),
           ),
         )

@@ -88,7 +88,7 @@ class _DynamicButtonState extends State<DynamicButton> {
                     },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
               color:
                   ((widget.onPressed == null || (widget.isLoading ?? false)) ||

@@ -1,4 +1,7 @@
 import 'package:flutter/foundation.dart';
+
+import 'dart:math';
+
 import 'package:life_sync/common/models/room_model.dart';
 
 class RoomProvider with ChangeNotifier {
@@ -11,8 +14,32 @@ class RoomProvider with ChangeNotifier {
 
   List<RoomModel> get rooms => _rooms;
 
-  void addRoom(RoomModel room) {
-    _rooms.add(room);
+  void addRoom(String name, String icon) {
+    // Generate a unique ID
+    String id = DateTime.now().millisecondsSinceEpoch.toString();
+
+    // Create new room
+    final newRoom = RoomModel(id: id, name: name, icon: icon);
+
+    // Add room to the list
+    _rooms.add(newRoom);
     notifyListeners();
   }
+
+  void deleteRoom(String id) {
+    _rooms.removeWhere((room) => room.id == id);
+    notifyListeners();
+  }
+
+  // List of predefined room icons
+  List<String> get availableRoomIcons => [
+        'living_room',
+        'bedroom',
+        'kitchen',
+        'bathroom',
+        'office',
+        'garage',
+        'garden',
+        'dining_room',
+      ];
 }

@@ -346,10 +346,11 @@ class _UserCompleteProfileState extends State<UserCompleteProfile> {
   Future<File?> imageToVar(double ratioX, double ratioY) async {
     var f = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (f == null) return null;
-    var c = await ImageCropper().cropImage(
-      sourcePath: f.path,
-      aspectRatio: CropAspectRatio(ratioX: ratioX, ratioY: ratioY),
-    );
-    return c == null ? null : File(c.path);
+    return File(f.path);
+    // var c = await ImageCropper().cropImage(
+    //   sourcePath: f.path,
+    //   aspectRatio: CropAspectRatio(ratioX: ratioX, ratioY: ratioY),
+    // );
+    // return c == null ? null : File(c.path);
   }
 }
