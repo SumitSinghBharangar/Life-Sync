@@ -284,7 +284,6 @@ class _UserCompleteProfileState extends State<UserCompleteProfile> {
                         dob: DateTime.parse(_dob.text),
                         createdAt: DateTime.now(),
                         updatedAt: DateTime.now(),
-                        lastSignIn: DateTime.now(),
                       );
                       await user.updateDisplayName(_name.text);
                       await user.updatePhotoURL(imageUrl);

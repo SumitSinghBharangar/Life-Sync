@@ -29,7 +29,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthServices()),
         ChangeNotifierProvider(create: (_) => DeviceProvider()),
         ChangeNotifierProvider(create: (_) => RoomProvider()),
-        ChangeNotifierProvider(create: (context) => HealthDataProvider()),
+        ChangeNotifierProvider(create: (context) => StepCounterProvider()),
         ChangeNotifierProvider(create: (_) => HealthDataProvider1()),
         ChangeNotifierProvider(create: (_) => StepCounterProvider()),
       ],

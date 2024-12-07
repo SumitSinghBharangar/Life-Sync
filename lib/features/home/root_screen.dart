@@ -5,6 +5,7 @@ import 'package:life_sync/common/buttons/scale_button.dart';
 import 'package:life_sync/features/heath/health_screen.dart';
 import 'package:life_sync/features/heath/health_tracking_screen.dart';
 import 'package:life_sync/features/home/smart_home_screen.dart';
+import 'package:life_sync/features/profile/profile_screen.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({
@@ -18,7 +19,7 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> {
   final List<Widget> screenList = [
     const SmartHomeScreen(),
-    const HealthScreen(),
+    const HealthTrackingScreen(),
   ];
   int selectedIndex = 0;
   final PageStorageBucket bucket = PageStorageBucket();
@@ -82,6 +83,30 @@ class _RootScreenState extends State<RootScreen> {
                       "Health Tack",
                       style: TextStyle(
                         color: selectedIndex == 1 ? Colors.blue : Colors.grey,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              ScaleButton(
+                scale: .97,
+                onTap: () {
+                  setState(() {
+                    currentScreen = const UserProfilePage();
+                    selectedIndex = 2;
+                  });
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.person_outline,
+                      color: selectedIndex == 2 ? Colors.blue : Colors.grey,
+                    ),
+                    Text(
+                      "profile",
+                      style: TextStyle(
+                        color: selectedIndex == 2 ? Colors.blue : Colors.grey,
                       ),
                     )
                   ],

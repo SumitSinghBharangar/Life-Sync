@@ -3,6 +3,8 @@ import 'package:life_sync/features/providers/step_count_provider.dart';
 import 'package:provider/provider.dart';
 
 class HealthTrackingScreen extends StatelessWidget {
+  const HealthTrackingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final stepCounter = Provider.of<StepCounterProvider>(context);

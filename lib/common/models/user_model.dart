@@ -3,48 +3,47 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  String uid;
+  String? uid;
 
   String name;
   String address;
-  String profile;
+  String? profile;
   String profileUrl;
   String phone;
   String email;
   DateTime dob;
-  DateTime createdAt;
+  DateTime? createdAt;
   DateTime updatedAt;
-  DateTime lastSignIn;
-  List<String> tokens;
+
+  List<String>? tokens;
 
   UserModel({
-    required this.uid,
+    this.uid,
     required this.name,
     required this.address,
-    required this.profile,
+    this.profile,
     required this.profileUrl,
     required this.phone,
     required this.email,
     required this.dob,
-    required this.createdAt,
+    this.createdAt,
     required this.updatedAt,
-    required this.lastSignIn,
-    required this.tokens,
+    this.tokens,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      "uid": uid,
+      "uid": uid ?? "",
       "name": name,
       "address": address,
-      "profile": profile,
+      "profile": profile ?? "",
       "profileUrl": profileUrl,
       "phone": phone,
       "email": email,
       "dob": dob,
-      "createdAt": Timestamp.fromDate(createdAt),
+      "createdAt": createdAt != null ? Timestamp.fromDate(createdAt!) : null,
       "updatedAt": Timestamp.fromDate(updatedAt),
-      "tokens": tokens,
+      "tokens": tokens ?? "",
     };
   }
 
@@ -58,10 +57,13 @@ class UserModel {
       phone: map['phone'] as String,
       email: map['email'] as String,
       dob: map['dob'] as DateTime,
-      createdAt: map['createdAt'] as DateTime,
+      createdAt: map['createdAt'] != null
+          ? (map['createdAt'] as Timestamp).toDate()
+          : null,
       updatedAt: map['updatedAt'] as DateTime,
-      lastSignIn: map['lastSignIn'] as DateTime,
-      tokens: List<String>.from(map['tokens'] as List<dynamic>),
+      tokens: map["tokens"] != null
+          ? List<String>.from(map['tokens'] as List<dynamic>)
+          : null,
     );
   }
 
