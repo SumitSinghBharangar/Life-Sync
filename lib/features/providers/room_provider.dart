@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 
-import 'dart:math';
-
 import 'package:life_sync/common/models/room_model.dart';
 
 class RoomProvider with ChangeNotifier {

@@ -4,8 +4,11 @@ import 'package:life_sync/features/auth/sevices/auth_service.dart';
 
 import 'package:life_sync/features/providers/device_provider.dart';
 import 'package:life_sync/features/providers/health_data_provider.dart';
+import 'package:life_sync/features/providers/healthprovider.dart';
 import 'package:life_sync/features/providers/room_provider.dart';
+import 'package:life_sync/features/providers/step_count_provider.dart';
 import 'package:life_sync/splash_screen.dart';
+import 'package:life_sync/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,6 +22,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Permissions.requestActivityRecognitionPermission();
   runApp(
     MultiProvider(
       providers: [
@@ -26,6 +30,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => DeviceProvider()),
         ChangeNotifierProvider(create: (_) => RoomProvider()),
         ChangeNotifierProvider(create: (context) => HealthDataProvider()),
+        ChangeNotifierProvider(create: (_) => HealthDataProvider1()),
+        ChangeNotifierProvider(create: (_) => StepCounterProvider()),
       ],
       child: const MyApp(),
     ),

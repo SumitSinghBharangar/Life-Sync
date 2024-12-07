@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:life_sync/common/enum/enum.dart';
-import 'package:life_sync/features/auth/screens/complete_profile.dart';
+
 import 'package:life_sync/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../providers/device_provider.dart';
@@ -67,7 +67,7 @@ class DeviceGridWidget extends StatelessWidget {
                               Fluttertoast.showToast(
                                   msg: "Connection Time out");
                             });
-                            deviceProvider.toggleDeviceStatus(device.id);
+                            // deviceProvider.toggleDeviceStatus(device.id);
                           },
                         ),
                       ],

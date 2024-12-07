@@ -3,7 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:life_sync/features/auth/screens/complete_profile.dart';
+import 'package:life_sync/features/onbording_screens/on_bording_screen.dart';
 import 'package:life_sync/features/widgets/device_grid_screen.dart';
 import 'package:life_sync/features/widgets/quick_action_widget.dart';
 import 'package:life_sync/features/widgets/room_list_widget.dart';
@@ -63,12 +66,34 @@ class _SmartHomeScreenState extends State<SmartHomeScreen> {
                   SizedBox(
                     height: MediaQuery.paddingOf(context).top + 20.h,
                   ),
-                  Text(
-                    "Manage Home",
-                    style: TextStyle(
-                      fontSize: 23.sp,
-                      color: Colors.grey,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        "Manage Home",
+                        style: TextStyle(
+                          fontSize: 23.sp,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          if (context.mounted) {
+                            Utils.go(
+                              context: context,
+                              screen: const OnbordingScreen(),
+                              replace: true,
+                            );
+                            Fluttertoast.showToast(
+                                msg: "You have successfully logout");
+                          }
+                        },
+                        icon: const Icon(
+                          Iconsax.logout,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 15.h,

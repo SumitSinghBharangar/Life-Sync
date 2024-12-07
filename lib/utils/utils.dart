@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'package:permission_handler/permission_handler.dart';
@@ -212,4 +214,22 @@ showLoading(BuildContext context) {
       );
     },
   );
+}
+
+class Permissions {
+  static Future<bool> requestActivityRecognitionPermission() async {
+    final status = await Permission.activityRecognition.request();
+
+    if (!status.isGranted) {
+      Fluttertoast.showToast(
+          msg: "Please grant activity recognition permission.");
+      // Open app settings if permission is still denied
+      var appSettingsOpened = await openAppSettings();
+      if (!appSettingsOpened) {
+        return false; // User didn't open settings
+      }
+    }
+
+    return status.isGranted;
+  }
 }
