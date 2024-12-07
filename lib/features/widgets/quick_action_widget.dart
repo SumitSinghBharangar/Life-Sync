@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:life_sync/common/buttons/scale_button.dart';
-import 'package:life_sync/features/auth/screens/complete_profile.dart';
+
 import 'package:life_sync/features/home/add_device_screen.dart';
 import 'package:life_sync/features/home/add_room_screen.dart';
+import 'package:life_sync/features/home/device_manager_screen.dart';
 import 'package:life_sync/utils/utils.dart';
 
 class QuickActionWidget extends StatelessWidget {
+  const QuickActionWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,7 +26,7 @@ class QuickActionWidget extends StatelessWidget {
                 icon: Icons.add_circle_outline,
                 label: 'Add Device',
                 onTap: () {
-                  Utils.go(context: context, screen: AddDeviceScreen());
+                  Utils.go(context: context, screen: const AddDeviceScreen());
                 },
               ),
               SizedBox(
@@ -33,7 +36,7 @@ class QuickActionWidget extends StatelessWidget {
                 icon: Icons.meeting_room_outlined,
                 label: 'Add Rooms',
                 onTap: () {
-                  Utils.go(context: context, screen: AddRoomScreen());
+                  Utils.go(context: context, screen: const AddRoomScreen());
                 },
               ),
               SizedBox(
@@ -43,7 +46,10 @@ class QuickActionWidget extends StatelessWidget {
                 icon: Icons.settings,
                 label: 'Manage Devices',
                 onTap: () {
-                  // Implement manage devices logic
+                  Utils.go(
+                    context: context,
+                    screen: const DeviceManagerScreen(),
+                  );
                 },
               ),
               SizedBox(

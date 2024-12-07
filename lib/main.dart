@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:life_sync/features/auth/sevices/auth_service.dart';
 
 import 'package:life_sync/features/providers/device_provider.dart';
+import 'package:life_sync/features/providers/health_data_provider.dart';
 import 'package:life_sync/features/providers/room_provider.dart';
 import 'package:life_sync/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthServices()),
         ChangeNotifierProvider(create: (_) => DeviceProvider()),
         ChangeNotifierProvider(create: (_) => RoomProvider()),
+        ChangeNotifierProvider(create: (context) => HealthDataProvider()),
       ],
       child: const MyApp(),
     ),

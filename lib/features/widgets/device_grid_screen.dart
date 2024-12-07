@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:life_sync/common/enum/enum.dart';
 import 'package:life_sync/features/auth/screens/complete_profile.dart';
+import 'package:life_sync/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../providers/device_provider.dart';
 
@@ -59,6 +61,12 @@ class DeviceGridWidget extends StatelessWidget {
                         Switch(
                           value: device.status == DeviceStatus.on,
                           onChanged: (_) {
+                            showLoading(context);
+                            Future.delayed(const Duration(seconds: 10), () {
+                              Navigator.pop(context);
+                              Fluttertoast.showToast(
+                                  msg: "Connection Time out");
+                            });
                             deviceProvider.toggleDeviceStatus(device.id);
                           },
                         ),

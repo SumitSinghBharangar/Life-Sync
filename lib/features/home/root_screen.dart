@@ -74,11 +74,11 @@ class _RootScreenState extends State<RootScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.calendar_month_outlined,
+                      Icons.health_and_safety,
                       color: selectedIndex == 1 ? Colors.blue : Colors.grey,
                     ),
                     Text(
-                      "Attendence",
+                      "Health Tack",
                       style: TextStyle(
                         color: selectedIndex == 1 ? Colors.blue : Colors.grey,
                       ),
