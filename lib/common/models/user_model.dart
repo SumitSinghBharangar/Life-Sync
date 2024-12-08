@@ -56,11 +56,11 @@ class UserModel {
       profileUrl: map["profileUrl"] as String,
       phone: map['phone'] as String,
       email: map['email'] as String,
-      dob: map['dob'] as DateTime,
+      dob: (map['dob'] as Timestamp).toDate(),
       createdAt: map['createdAt'] != null
           ? (map['createdAt'] as Timestamp).toDate()
           : null,
-      updatedAt: map['updatedAt'] as DateTime,
+      updatedAt: (map['updatedAt'] as Timestamp).toDate(),
       tokens: map["tokens"] != null
           ? List<String>.from(map['tokens'] as List<dynamic>)
           : null,

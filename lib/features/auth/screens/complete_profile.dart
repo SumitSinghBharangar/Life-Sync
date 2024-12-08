@@ -215,6 +215,9 @@ class _UserCompleteProfileState extends State<UserCompleteProfile> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 20.h,
+              ),
               TextFormField(
                 onTapOutside: (event) {
                   FocusManager.instance.primaryFocus?.unfocus();
@@ -273,7 +276,7 @@ class _UserCompleteProfileState extends State<UserCompleteProfile> {
                           await FirebaseMessaging.instance.getToken();
 
                       UserModel model = UserModel(
-                        email: user.email!,
+                        email: _email.text,
                         uid: user.uid,
                         name: _name.text,
                         profile: imageUrl,

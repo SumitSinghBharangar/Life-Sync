@@ -10,7 +10,9 @@ class StepCounterProvider extends ChangeNotifier {
   StreamSubscription<StepCount>? _stepCountSubscription;
   bool _isSupported = true;
 
+  // ignore: constant_identifier_names
   static const double CALORIES_PER_STEP = 0.04; // Average estimate
+  // ignore: constant_identifier_names
   static const double WEIGHT_KG = 70.0;
 
   int get steps => _steps;

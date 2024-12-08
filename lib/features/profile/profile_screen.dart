@@ -13,6 +13,7 @@ import 'package:life_sync/common/app_colors.dart';
 import 'package:life_sync/common/buttons/scale_button.dart';
 import 'package:life_sync/common/constants/app_collection.dart';
 import 'package:life_sync/common/models/user_model.dart';
+import 'package:life_sync/features/auth/screens/complete_profile.dart';
 import 'package:life_sync/utils/utils.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -25,18 +26,20 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+  UserModel? model;
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   _init() async {
     var r = await usersCollection.where("uid", isEqualTo: uid).limit(1).get();
-    if (r.docs.isNotEmpty) {
+    if (r.docs.isEmpty) {
+      Utils.go(
+          context: context, screen: const UserCompleteProfile(), replace: true);
+    } else {
       setState(() {
         model = UserModel.fromMap(r.docs.first.data());
       });
     }
   }
 
-  UserModel? model;
-
-  String uid = FirebaseAuth.instance.currentUser!.uid;
   String phturl = FirebaseAuth.instance.currentUser!.photoURL.toString();
   var currentuser = FirebaseAuth.instance.currentUser;
   bool _isEditing = false;
@@ -59,12 +62,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
       _init();
     });
 
-    _nameController = TextEditingController(text: model!.name);
-    _addressController = TextEditingController(text: model!.address);
-    _phoneController = TextEditingController(text: model!.phone);
-    _aboutController = TextEditingController(text: model!.address);
-    _emailController = TextEditingController(text: model!.email);
-    _dateController = TextEditingController(text: model!.email);
+    _nameController = TextEditingController(text: model?.name ?? "");
+    _addressController = TextEditingController(text: model?.address ?? "");
+    _phoneController = TextEditingController(text: model?.phone ?? "");
+    _aboutController = TextEditingController(text: model?.address ?? "");
+    _emailController = TextEditingController(text: model?.email ?? "");
+    _dateController = TextEditingController(text: model?.email ?? "");
   }
 
   @override
@@ -105,6 +108,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       profileUrl: imageUrl!,
       dob: _date!,
       updatedAt: DateTime.now(),
+      
     );
     if (_isEditing) {
       showLoading(context);
@@ -131,14 +135,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
           style: TextStyle(
             fontSize: 22.sp,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
         actions: [
           IconButton(
             icon: Icon(
               _isEditing ? Icons.save : Icons.edit,
-              color: Colors.white,
+              color: Colors.black,
             ),
             onPressed: _toggleEditMode,
           ),
@@ -150,7 +154,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             icon: Icon(
               Icons.arrow_back,
               size: 30.h,
-              color: Colors.white,
+              color: Colors.black,
             )),
       ),
       body: SingleChildScrollView(
@@ -178,7 +182,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           if (imageUrl == null && pickedImage == null)
                             Center(
                               child: Image.network(
-                                model!.profileUrl,
+                                FirebaseAuth.instance.currentUser!.photoURL
+                                    .toString(),
                                 loadingBuilder:
                                     (context, child, loadingProgress) {
                                   if (loadingProgress?.cumulativeBytesLoaded ==
@@ -287,7 +292,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16.h,
-                color: Colors.white),
+                color: Colors.black),
           ),
           SizedBox(height: 5.h),
           isEditing
@@ -295,7 +300,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   controller: controller,
                   maxLines: maxLines,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -307,7 +312,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   controller.text,
                   style: TextStyle(
                     fontSize: 16.h,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
         ],
