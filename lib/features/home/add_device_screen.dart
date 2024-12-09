@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:life_sync/common/animations/fade_in_animation.dart';
 import 'package:life_sync/common/buttons/dynamic_button.dart';
 import 'package:life_sync/common/enum/enum.dart';
 import 'package:provider/provider.dart';
@@ -34,93 +35,112 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Device Name',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a device name';
-                  }
-                  return null;
-                },
-                onTapOutside: (event) {
-                  FocusScope.of(context).unfocus();
-                },
-                onSaved: (value) {
-                  _deviceName = value!;
-                },
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Select Device Type',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: DeviceType.values.map((type) {
-                  return AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    child: ChoiceChip(
-                      label: Text(_getDeviceTypeName(type)),
-                      selected: _selectedDeviceType == type,
-                      onSelected: (bool selected) {
-                        setState(() {
-                          _selectedDeviceType = type;
-                        });
-                      },
-                    ),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Select Room',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Choose Room',
-                ),
-                value: _selectedRoom,
-                items: roomProvider.rooms.map((room) {
-                  return DropdownMenuItem(
-                    value: room.name,
-                    child: Text(room.name),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedRoom = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please select a room';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              DynamicButton.fromText(
-                  text: "Add Device",
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                      deviceProvider.addDevice(
-                        name: _deviceName,
-                        type: _selectedDeviceType,
-                        roomName: _selectedRoom!,
-                      );
-                      Fluttertoast.showToast(msg: "Device added Successfully");
-                      Navigator.pop(context);
+              FadeInAnimation(
+                delay: 1,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Device Name',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a device name';
                     }
-                  }),
+                    return null;
+                  },
+                  onTapOutside: (event) {
+                    FocusScope.of(context).unfocus();
+                  },
+                  onSaved: (value) {
+                    _deviceName = value!;
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              const FadeInAnimation(
+                delay: 1.4,
+                child: Text(
+                  'Select Device Type',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 10),
+              FadeInAnimation(
+                delay: 2,
+                child: Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: DeviceType.values.map((type) {
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      child: ChoiceChip(
+                        label: Text(_getDeviceTypeName(type)),
+                        selected: _selectedDeviceType == type,
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selectedDeviceType = type;
+                          });
+                        },
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const FadeInAnimation(
+                delay: 2.4,
+                child: Text(
+                  'Select Room',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 10),
+              FadeInAnimation(
+                delay: 2.7,
+                child: DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Choose Room',
+                  ),
+                  value: _selectedRoom,
+                  items: roomProvider.rooms.map((room) {
+                    return DropdownMenuItem(
+                      value: room.name,
+                      child: Text(room.name),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedRoom = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a room';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              FadeInAnimation(
+                delay: 3,
+                child: DynamicButton.fromText(
+                    text: "Add Device",
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        deviceProvider.addDevice(
+                          name: _deviceName,
+                          type: _selectedDeviceType,
+                          roomName: _selectedRoom!,
+                        );
+                        Fluttertoast.showToast(
+                            msg: "Device added Successfully");
+                        Navigator.pop(context);
+                      }
+                    }),
+              ),
               // ElevatedButton(
               //   onPressed: () {
               //     if (_formKey.currentState!.validate()) {

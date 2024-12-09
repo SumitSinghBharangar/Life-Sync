@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:life_sync/common/animations/fade_in_animation.dart';
 import 'package:life_sync/common/buttons/dynamic_button.dart';
 import 'package:life_sync/common/buttons/scale_button.dart';
 import 'package:provider/provider.dart';
@@ -31,23 +32,26 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Room Name',
-                  border: OutlineInputBorder(),
+              FadeInAnimation(
+                delay: 1,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Room Name',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a room name';
+                    }
+                    return null;
+                  },
+                  onTapOutside: (event) {
+                    FocusScope.of(context).unfocus();
+                  },
+                  onSaved: (value) {
+                    _roomName = value!;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a room name';
-                  }
-                  return null;
-                },
-                onTapOutside: (event) {
-                  FocusScope.of(context).unfocus();
-                },
-                onSaved: (value) {
-                  _roomName = value!;
-                },
               ),
               const SizedBox(height: 20),
               const Text(
@@ -56,69 +60,76 @@ class _AddRoomScreenState extends State<AddRoomScreen> {
               ),
               const SizedBox(height: 10),
               Expanded(
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemCount: roomProvider.availableRoomIcons.length,
-                  itemBuilder: (context, index) {
-                    final icon = roomProvider.availableRoomIcons[index];
-                    return ScaleButton(
-                      onTap: () {
-                        setState(() {
-                          _selectedIcon = icon;
-                        });
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 400),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: _selectedIcon == icon
-                                  ? Colors.blue
-                                  : Colors.grey.shade200,
-                              width: 2),
-                          color: _selectedIcon == icon
-                              ? Colors.blue.shade100
-                              : Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            icon.replaceAll('_', ' ').toUpperCase(),
-                            style: TextStyle(
-                                fontWeight: _selectedIcon == icon
-                                    ? FontWeight.bold
-                                    : FontWeight.normal),
+                child: FadeInAnimation(
+                  delay: 1.5,
+                  child: GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemCount: roomProvider.availableRoomIcons.length,
+                    itemBuilder: (context, index) {
+                      final icon = roomProvider.availableRoomIcons[index];
+                      return ScaleButton(
+                        onTap: () {
+                          setState(() {
+                            _selectedIcon = icon;
+                          });
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 400),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: _selectedIcon == icon
+                                    ? Colors.blue
+                                    : Colors.grey.shade200,
+                                width: 2),
+                            color: _selectedIcon == icon
+                                ? Colors.blue.shade100
+                                : Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Text(
+                              icon.replaceAll('_', ' ').toUpperCase(),
+                              style: TextStyle(
+                                  fontWeight: _selectedIcon == icon
+                                      ? FontWeight.bold
+                                      : FontWeight.normal),
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
-              DynamicButton.fromText(
-                  text: "Add Rooms",
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
+              FadeInAnimation(
+                delay: 2.5,
+                child: DynamicButton.fromText(
+                    text: "Add Rooms",
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
 
-                      // Add room using provider
-                      roomProvider.addRoom(_roomName, _selectedIcon);
+                        // Add room using provider
+                        roomProvider.addRoom(_roomName, _selectedIcon);
 
-                      // Show success message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Room added successfully!')),
-                      );
+                        // Show success message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Room added successfully!')),
+                        );
 
-                      // Navigate back
-                      Navigator.pop(context);
-                    }
-                  }),
+                        // Navigate back
+                        Navigator.pop(context);
+                      }
+                    }),
+              ),
             ],
           ),
         ),

@@ -280,7 +280,8 @@ class _UserCompleteProfileState extends State<UserCompleteProfile> {
                         uid: user.uid,
                         name: _name.text,
                         profile: imageUrl,
-                        phone: w.phoneNumber ?? "",
+                        phone: FirebaseAuth.instance.currentUser!.phoneNumber ??
+                            "",
                         address: _address.text,
                         profileUrl: imageUrl,
                         tokens: [token!],

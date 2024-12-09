@@ -32,6 +32,7 @@ class HealthTrackingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 40),
             FadeInAnimation(
               delay: 1,
               child: Row(
@@ -41,20 +42,20 @@ class HealthTrackingScreen extends StatelessWidget {
                     children: [
                       Text(
                         _getTodayDate(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                         ),
                       ),
-                      Text(
+                      const Text(
                         "My Day",
                         style: TextStyle(fontSize: 34),
                       ),
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Container(
                     decoration: ShapeDecoration(
-                      shape: StarBorder(
+                      shape: const StarBorder(
                         innerRadiusRatio: 0.9,
                         pointRounding: 0.2,
                         points: 10,
@@ -67,7 +68,7 @@ class HealthTrackingScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Row(
@@ -101,10 +102,10 @@ class HealthTrackingScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Expanded(
+                              Expanded(
                                 child: ProgressWithText(
-                                  value: 2232,
-                                  indicatorValue: .78,
+                                  value: stepCounter.steps,
+                                  indicatorValue: stepCounter.steps / 10000,
                                   title: 'steps',
                                 ),
                               ),
@@ -139,12 +140,12 @@ class HealthTrackingScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     IncreasingText(
-                                      7.21,
+                                      4.21,
                                       isSingle: false,
                                       style: TextStyle(fontSize: 28),
                                     ),
                                     Text(
-                                      "hours",
+                                      "coming Soon",
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                   ],
@@ -192,7 +193,7 @@ class HealthTrackingScreen extends StatelessWidget {
                                 ),
                               ),
                               const Text(
-                                "bottles",
+                                "Coming soon",
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ],
@@ -235,17 +236,31 @@ class HealthTrackingScreen extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                               ),
-                              const IncreasingText(
-                                98,
-                                isSingle: true,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 40,
-                                  height: .9,
-                                ),
+                              const Row(
+                                children: [
+                                  IncreasingText(
+                                    98,
+                                    isSingle: true,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 40,
+                                      height: .9,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "bmp",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
                               ),
                               const Text(
-                                "bmp",
+                                "Coming Soon",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -279,11 +294,15 @@ class HealthTrackingScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Expanded(
+                              Expanded(
                                 child: ProgressWithText(
-                                  indicatorValue: .78,
+                                  indicatorValue:
+                                      stepCounter.calculateCaloriesBurned() /
+                                          3000,
                                   title: 'kcal',
-                                  value: 553,
+                                  value: stepCounter
+                                      .calculateCaloriesBurned()
+                                      .toInt(),
                                 ),
                               ),
                             ],
@@ -312,14 +331,23 @@ class HealthTrackingScreen extends StatelessWidget {
                                 ],
                               ),
                               Spacer(),
-                              Text(
-                                "0",
-                                style: TextStyle(fontSize: 32),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "0",
+                                    style: TextStyle(fontSize: 32),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "min",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                "min",
-                                style: TextStyle(color: Colors.grey),
-                              ),
+                              Text("Coming Soon")
                             ],
                           ),
                         ),
@@ -332,55 +360,55 @@ class HealthTrackingScreen extends StatelessWidget {
             const SizedBox(height: 50),
 
             // Section for Step Counter
-            Text(
+            const Text(
               'Step Counter',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Center(
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Steps Taken',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     '${stepCounter.steps}',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Status: ${stepCounter.status}',
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ],
               ),
             ),
-            Divider(height: 30, thickness: 1),
+            const Divider(height: 30, thickness: 1),
             // Additional Health Metrics (Placeholder for Future Enhancements)
-            Text(
-              'Other Health Metrics',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              '• Heart Rate: Coming Soon',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 5),
-            Text(
-              '• Calories Burned: Coming Soon',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 5),
-            Text(
-              '• Sleep Tracker: Coming Soon',
-              style: TextStyle(fontSize: 16),
-            ),
+            // const Text(
+            //   'Other Health Metrics',
+            //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            // ),
+            // const SizedBox(height: 10),
+            // const Text(
+            //   '• Heart Rate: Coming Soon',
+            //   style: TextStyle(fontSize: 16),
+            // ),
+            // const SizedBox(height: 5),
+            // Text(
+            //   '• Calories Burned: ${stepCounter.calculateCaloriesBurned()}',
+            //   style: TextStyle(fontSize: 16),
+            // ),
+            // const SizedBox(height: 5),
+            // const Text(
+            //   '• Sleep Tracker: Coming Soon',
+            //   style: TextStyle(fontSize: 16),
+            // ),
           ],
         ),
       ),

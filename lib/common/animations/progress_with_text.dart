@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class ProgressWithText extends StatefulWidget {
-  const ProgressWithText({
+  ProgressWithText({
     super.key,
     required this.indicatorValue,
     required this.title,
     required this.value,
   });
 
-  final double indicatorValue;
-  final String title;
-  final int value;
+  double indicatorValue;
+  String title;
+  int value;
 
   @override
   State<ProgressWithText> createState() => _ProgressWithTextState();
